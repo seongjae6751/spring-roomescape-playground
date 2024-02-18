@@ -22,6 +22,12 @@ dependencies {
 
     // 웹을 위한 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.projectlombok:lombok:1.18.22'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {
