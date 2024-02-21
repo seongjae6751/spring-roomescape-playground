@@ -15,9 +15,10 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<>();
     private final AtomicLong index = new AtomicLong(0);
+    private final JdbcTemplateReservationRepository jdbcTemplateReservationRepository;
 
     public List<Reservation> getAllReservations() {
-        return reservations;
+        return jdbcTemplateReservationRepository.findAll();
     }
     public Reservation addReservation(Reservation reservation) {
 
