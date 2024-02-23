@@ -13,8 +13,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
-    private final List<Reservation> reservations = new ArrayList<>();
-    private final AtomicLong index = new AtomicLong(0);
     private final JdbcTemplateReservationRepository jdbcTemplateReservationRepository;
 
     public List<Reservation> getAllReservations() {
@@ -26,24 +24,19 @@ public class ReservationService {
             throw new ParamException(ParamException.Type.MISSING_PARAMETER);
         }
 
+        long generatedId = jdbcTemplateReservationRepository.insertAndGetGeneratedKey(reservation);
+
         Reservation newReservation = Reservation.builder()
-                .id(index.incrementAndGet())
+                .id(generatedId)
                 .name(reservation.getName())
                 .date(reservation.getDate())
                 .time(reservation.getTime())
                 .build();
 
-        reservations.add(newReservation);
-
         return newReservation;
     }
 
     public void deleteReservation(Long id) {
-        // 삭제할 예약이 없을 때 예외처리
-        if (reservations.stream().noneMatch(reservation -> reservation.getId().equals(id))) {
-            throw new ReservationException(ReservationException.Type.NOT_FOUND_RESERVATION);
-        }
-
-        reservations.removeIf(reservation -> reservation.getId().equals(id));
+    if(!jdbcTemplateReservationRepository.delete(id)) throw new ReservationException(ReservationException.Type.NOT_FOUND_RESERVATION);
     }
 }
