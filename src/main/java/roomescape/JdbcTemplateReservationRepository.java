@@ -28,9 +28,9 @@ public class JdbcTemplateReservationRepository {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
                     sql, new String[]{"id"});
-            ps.setString(1, reservation.getName());
-            ps.setString(2, reservation.getDate());
-            ps.setString(3, reservation.getTime());
+            ps.setString(1, reservation.name());
+            ps.setString(2, reservation.date());
+            ps.setString(3, reservation.time());
             return ps;
         }, keyHolder);
         return keyHolder.getKey().longValue();
