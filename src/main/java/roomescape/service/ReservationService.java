@@ -1,14 +1,14 @@
-package roomescape;
+package roomescape.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import roomescape.Exception.ParamException;
-import roomescape.Exception.ReservationException;
+import roomescape.domain.Reservation;
+import roomescape.exception.ParamException;
+import roomescape.exception.ReservationException;
+import roomescape.repository.JdbcTemplateReservationRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
