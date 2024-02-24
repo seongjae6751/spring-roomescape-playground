@@ -33,5 +33,6 @@ public class ReservationException extends RuntimeException {
         this.httpStatus = type.getHttpStatus();
         this.errorMessage = type.getErrorMessage();
     }
+
 }
 

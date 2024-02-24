@@ -17,4 +17,5 @@ public class ControllerSupport {
         return ResponseEntity.status(ParamException.Type.MISSING_PARAMETER.getHttpStatus())
                 .body(ParamException.Type.MISSING_PARAMETER.getErrorMessage());
     }
+
 }
