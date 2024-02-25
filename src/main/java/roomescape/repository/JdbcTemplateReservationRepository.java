@@ -23,7 +23,7 @@ public class JdbcTemplateReservationRepository {
         return jdbcTemplate.query("select * from reservation", reservationRowMapper);
     }
 
-    public Long insertAndGetGeneratedKey(Reservation reservation) {
+    public Long insert(Reservation reservation) {
         String sql = "insert into reservation (name, date, time) values (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -41,8 +41,7 @@ public class JdbcTemplateReservationRepository {
         String sql = "delete from reservation where id = ?";
 
         // 삭제에 성공하면 1반환 실패하면 0 반환
-        int isDeleted = jdbcTemplate.update(sql, Long.valueOf(id));
-        return isDeleted == 1;
+        return jdbcTemplate.update(sql, Long.valueOf(id)) == 1;
     }
 
     private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> {
