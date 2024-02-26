@@ -10,19 +10,19 @@ import roomescape.service.ReservationService;
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<Reservation>> showReservationList() {
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
         Reservation newReservation = reservationService.addReservation(reservation);
         return ResponseEntity.created(URI.create("/reservations/" + newReservation.id())).body(newReservation);
