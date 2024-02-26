@@ -1,4 +1,4 @@
-package roomescape.Exception;
+package roomescape.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -33,5 +33,6 @@ public class ReservationException extends RuntimeException {
         this.httpStatus = type.getHttpStatus();
         this.errorMessage = type.getErrorMessage();
     }
+
 }
 

@@ -1,4 +1,4 @@
-package roomescape.Exception;
+package roomescape.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,4 +17,5 @@ public class ControllerSupport {
         return ResponseEntity.status(ParamException.Type.MISSING_PARAMETER.getHttpStatus())
                 .body(ParamException.Type.MISSING_PARAMETER.getErrorMessage());
     }
+
 }

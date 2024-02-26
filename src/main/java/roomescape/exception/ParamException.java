@@ -1,4 +1,4 @@
-package roomescape.Exception;
+package roomescape.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -31,4 +31,5 @@ public class ParamException extends RuntimeException{
         this.httpStatus = type.getHttpStatus();
         this.errorMessage = type.getErrorMessage();
     }
+
 }
