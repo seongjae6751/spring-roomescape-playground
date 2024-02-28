@@ -19,11 +19,11 @@ public class JdbcTemplateReservationRepository {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<Reservation> findAll() {
+    public List<Reservation> findAllReservation() {
         return jdbcTemplate.query("select * from reservation", reservationRowMapper);
     }
 
-    public Long insert(Reservation reservation) {
+    public Long insertReservation(Reservation reservation) {
         String sql = "insert into reservation (name, date, time) values (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -37,7 +37,7 @@ public class JdbcTemplateReservationRepository {
         return keyHolder.getKey().longValue();
     }
 
-    public boolean delete(Long id) {
+    public boolean deleteReservation(Long id) {
         String sql = "delete from reservation where id = ?";
 
         // 삭제에 성공하면 1반환 실패하면 0 반환

@@ -16,7 +16,7 @@ public class ReservationService {
     private final JdbcTemplateReservationRepository jdbcTemplateReservationRepository;
 
     public List<Reservation> getAllReservations() {
-        return jdbcTemplateReservationRepository.findAll();
+        return jdbcTemplateReservationRepository.findAllReservation();
     }
     public Reservation addReservation(Reservation reservation) {
 
@@ -25,7 +25,7 @@ public class ReservationService {
             StringUtils.isEmpty(reservation.time())) {
             throw new ParamException(ParamException.Type.MISSING_PARAMETER);
         }
-        long generatedId = jdbcTemplateReservationRepository.insert(reservation);
+        long generatedId = jdbcTemplateReservationRepository.insertReservation(reservation);
 
         Reservation newReservation = new Reservation(generatedId, reservation.name(), reservation.date(), reservation.time());
 
@@ -33,7 +33,7 @@ public class ReservationService {
     }
 
     public void deleteReservation(Long id) {
-        if(!jdbcTemplateReservationRepository.delete(id)) {
+        if(!jdbcTemplateReservationRepository.deleteReservation(id)) {
             throw new ReservationException(ReservationException.Type.NOT_FOUND_RESERVATION);
         }
     }
