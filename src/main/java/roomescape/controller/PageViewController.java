@@ -14,4 +14,9 @@ public class PageViewController {
     public String showReservationOPage() {
         return "reservation";
     }
+
+    @GetMapping("/time")
+    public String showTimePage() {
+        return "time";
+    }
 }
