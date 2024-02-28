@@ -22,12 +22,10 @@ public class ReservationService {
 
         if (StringUtils.isEmpty(reservation.name()) ||
             StringUtils.isEmpty(reservation.date()) ||
-            StringUtils.isEmpty(reservation.time())) {
+            StringUtils.isEmpty(reservation.time().time())) {
             throw new ParamException(ParamException.Type.MISSING_PARAMETER);
         }
-        long generatedId = jdbcTemplateReservationRepository.insertReservation(reservation);
-
-        Reservation newReservation = new Reservation(generatedId, reservation.name(), reservation.date(), reservation.time());
+        Reservation newReservation = jdbcTemplateReservationRepository.insertReservation(reservation);
 
         return newReservation;
     }

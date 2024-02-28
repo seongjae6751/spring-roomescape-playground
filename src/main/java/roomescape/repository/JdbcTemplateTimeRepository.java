@@ -20,7 +20,7 @@ public class JdbcTemplateTimeRepository {
 
     public List<Time> findAllTime() {return jdbcTemplate.query("select * from time", timeRowMapper); }
 
-    public Long insertTime(Time time)  {
+    public Time insertTime(Time time)  {
         String sql = "insert into time (time) values (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -29,7 +29,7 @@ public class JdbcTemplateTimeRepository {
             ps.setString(1, time.time());
             return ps;
         }, keyHolder);
-        return keyHolder.getKey().longValue();
+        return new Time(keyHolder.getKey().longValue(), time.time());
     }
 
     public boolean deleteTime(Long id) {

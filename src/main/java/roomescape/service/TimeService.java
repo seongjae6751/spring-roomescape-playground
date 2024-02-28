@@ -15,10 +15,7 @@ public class TimeService {
     public List<Time> getAllTime() {return jdbcTemplateTimeRepository.findAllTime(); }
 
     public Time addTime(Time time) {
-        long generatedId = jdbcTemplateTimeRepository.insertTime(time);
-
-        Time newTime = new Time(generatedId, time.time());
-
+        Time newTime = jdbcTemplateTimeRepository.insertTime(time);
         return newTime;
     }
 
