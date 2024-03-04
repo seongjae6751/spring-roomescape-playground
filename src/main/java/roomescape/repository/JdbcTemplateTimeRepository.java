@@ -26,15 +26,23 @@ public class JdbcTemplateTimeRepository {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
                     sql, new String[]{"id"});
-            ps.setString(1, time.time());
+            ps.setString(1, time.getTime());
             return ps;
         }, keyHolder);
-        return new Time(keyHolder.getKey().longValue(), time.time());
+        return new Time(keyHolder.getKey().longValue(), time.getTime());
     }
 
     public boolean deleteTime(Long id) {
         String sql = "delete from time where id = ?";
         return jdbcTemplate.update(sql, Long.valueOf(id)) == 1;
+    }
+
+    public Time findById(Long id) {
+        String sql = "SELECT * FROM time WHERE id = ?";
+
+        return jdbcTemplate.queryForObject(sql,
+                timeRowMapper,
+                id);
     }
 
     private final RowMapper<Time> timeRowMapper = (rs, rowNum) -> {
@@ -44,4 +52,6 @@ public class JdbcTemplateTimeRepository {
         );
         return time;
     };
+
+
 }

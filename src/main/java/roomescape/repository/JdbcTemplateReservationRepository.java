@@ -21,13 +21,16 @@ public class JdbcTemplateReservationRepository {
     }
 
     public List<Reservation> findAllReservation() {
-        String sql = "SELECT" +
-                " r.id as reservation_id," +
-                " r.name," +
-                " r.date," +
-                " t.id as time_id," +
-                " t.time as time_value" +
-                "FROM reservation as r inner join time as t on r.time_id = t.id";
+        String sql =
+                """
+                SELECT
+                  r.id as reservation_id,
+                  r.name,
+                  r.date,
+                  t.id as time_id,
+                  t.time as time_value,
+                FROM reservation as r inner join time as t on r.time_id = t.id
+                """;
 
         return jdbcTemplate.query(sql, reservationRowMapper);
     }
@@ -38,13 +41,13 @@ public class JdbcTemplateReservationRepository {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
                     sql, new String[]{"id"});
-            ps.setString(1, reservation.name());
-            ps.setString(2, reservation.date());
-            ps.setLong(3, reservation.time().id());
+            ps.setString(1, reservation.getName());
+            ps.setString(2, reservation.getDate());
+            ps.setLong(3, reservation.getTime().getId());
             return ps;
         }, keyHolder);
 
-        return new Reservation(keyHolder.getKey().longValue(), reservation.name(), reservation.date(), reservation.time());
+        return new Reservation(keyHolder.getKey().longValue(), reservation.getName(), reservation.getDate(), reservation.getTime());
     }
 
     public boolean deleteReservation(Long id) {
@@ -56,11 +59,11 @@ public class JdbcTemplateReservationRepository {
 
     private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> {
         Reservation reservation = new Reservation(
-                rs.getLong("id"),
+                rs.getLong("reservation_id"),
                 rs.getString("name"),
                 rs.getString("date"),
-                new Time(rs.getLong("id"),
-                        rs.getString("time"))
+                new Time(rs.getLong("time_id"),
+                        rs.getString("time_value"))
         );
         return reservation;
     };
