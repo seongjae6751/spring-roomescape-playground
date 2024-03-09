@@ -37,9 +37,8 @@ public class ReservationServiceImpl implements ReservationService {
 
         Time time = jdbcTemplateTimeRepository.findById(reservationRequestDto.time());
         Reservation newReservation = new Reservation(null, reservationRequestDto.name(), reservationRequestDto.date(), time);
-        jdbcTemplateReservationRepository.insertReservation(newReservation);
 
-        return newReservation;
+        return jdbcTemplateReservationRepository.insertReservation(newReservation);
     }
 
     public void deleteReservation(Long id) {
